@@ -1,32 +1,88 @@
-/**
- * HotelBookingApp
- *
- * This class represents the entry point of the Hotel Booking Management System.
- * The application begins execution from the main() method and prints a welcome
- * message along with application name and version information.
- *
- * @author Vimal Raj
- * @version 1.0
- */
+// -------------------------------------------------------
+// Abstract Room Class
+// -------------------------------------------------------
+abstract class Room {
+
+    protected String roomType;
+    protected int beds;
+    protected double price;
+
+    public Room(String roomType, int beds, double price) {
+        this.roomType = roomType;
+        this.beds = beds;
+        this.price = price;
+    }
+
+    public void displayRoomDetails() {
+        System.out.println("Room Type : " + roomType);
+        System.out.println("Beds      : " + beds);
+        System.out.println("Price     : $" + price);
+    }
+}
+
+// -------------------------------------------------------
+// Single Room Class
+// -------------------------------------------------------
+class SingleRoom extends Room {
+
+    public SingleRoom() {
+        super("Single Room", 1, 80.0);
+    }
+}
+
+// -------------------------------------------------------
+// Double Room Class
+// -------------------------------------------------------
+class DoubleRoom extends Room {
+
+    public DoubleRoom() {
+        super("Double Room", 2, 140.0);
+    }
+}
+
+// -------------------------------------------------------
+// Suite Room Class
+// -------------------------------------------------------
+class SuiteRoom extends Room {
+
+    public SuiteRoom() {
+        super("Suite Room", 3, 300.0);
+    }
+}
+
+// -------------------------------------------------------
+// Application Entry Point
+// -------------------------------------------------------
 public class HotelBookingApp {
 
-    /**
-     * Main method – Entry point of the Java application.
-     * The JVM invokes this method when the program starts.
-     *
-     * @param args Command line arguments (not used in this version)
-     */
     public static void main(String[] args) {
 
-        // Welcome message
-        System.out.println("======================================");
-        System.out.println("  Welcome to Hotel Booking System");
-        System.out.println("  Version : 1.0");
-        System.out.println("======================================");
+        System.out.println("=====================================");
+        System.out.println(" HOTEL BOOKING MANAGEMENT SYSTEM");
+        System.out.println(" Version 2.1 - Room Initialization");
+        System.out.println("=====================================\n");
 
-        System.out.println("Application started successfully.");
+        Room singleRoom = new SingleRoom();
+        Room doubleRoom = new DoubleRoom();
+        Room suiteRoom = new SuiteRoom();
 
-        // Application termination message
-        System.out.println("Application execution completed.");
+        int singleRoomAvailable = 10;
+        int doubleRoomAvailable = 6;
+        int suiteRoomAvailable = 3;
+
+        System.out.println("Single Room Details:");
+        singleRoom.displayRoomDetails();
+        System.out.println("Available Rooms: " + singleRoomAvailable);
+        System.out.println("--------------------------------");
+
+        System.out.println("Double Room Details:");
+        doubleRoom.displayRoomDetails();
+        System.out.println("Available Rooms: " + doubleRoomAvailable);
+        System.out.println("--------------------------------");
+
+        System.out.println("Suite Room Details:");
+        suiteRoom.displayRoomDetails();
+        System.out.println("Available Rooms: " + suiteRoomAvailable);
+        System.out.println("--------------------------------");
     }
 }
