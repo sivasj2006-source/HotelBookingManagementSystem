@@ -1,72 +1,56 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
- * Use Case 4: Room Search
- * Displays available rooms without modifying inventory
+ * Use Case 5: Booking Request Queue
+ * Demonstrates handling booking requests using FIFO Queue
  *
- * @version 4.0
+ * @version 5.0
  */
 
-// Inventory class (state holder)
-class RoomInventory {
+// Reservation class
+class Reservation {
 
-    private HashMap<String, Integer> inventory;
+    private String guestName;
+    private String roomType;
 
-    public RoomInventory() {
-        inventory = new HashMap<>();
-
-        inventory.put("Single Room", 10);
-        inventory.put("Double Room", 0); // Example unavailable
-        inventory.put("Suite Room", 3);
+    public Reservation(String guestName, String roomType) {
+        this.guestName = guestName;
+        this.roomType = roomType;
     }
 
-    public HashMap<String, Integer> getInventory() {
-        return inventory;
-    }
-}
-
-// Room domain model
-class Room {
-
-    private String type;
-    private int price;
-
-    public Room(String type, int price) {
-        this.type = type;
-        this.price = price;
+    public String getGuestName() {
+        return guestName;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public int getPrice() {
-        return price;
+    public String getRoomType() {
+        return roomType;
     }
 }
 
-// Search service
-class RoomSearchService {
+// Booking Request Queue
+class BookingRequestQueue {
 
-    public void searchAvailableRooms(RoomInventory inventory, Room[] rooms) {
+    private Queue<Reservation> requestQueue;
 
-        System.out.println("Available Rooms");
-        System.out.println("----------------");
+    public BookingRequestQueue() {
+        requestQueue = new LinkedList<>();
+    }
 
-        Map<String, Integer> data = inventory.getInventory();
+    // Add request to queue
+    public void addRequest(Reservation reservation) {
+        requestQueue.add(reservation);
+        System.out.println("Booking request added for " + reservation.getGuestName());
+    }
 
-        for (Room room : rooms) {
+    // Display queued requests
+    public void displayRequests() {
 
-            int available = data.getOrDefault(room.getType(), 0);
+        System.out.println("\nCurrent Booking Request Queue");
+        System.out.println("-----------------------------");
 
-            if (available > 0) {
-                System.out.println(
-                        room.getType() +
-                                " | Price: ₹" + room.getPrice() +
-                                " | Available: " + available
-                );
-            }
+        for (Reservation r : requestQueue) {
+            System.out.println("Guest: " + r.getGuestName() + " | Room Type: " + r.getRoomType());
         }
     }
 }
@@ -76,23 +60,22 @@ public class HotelBookingApp {
     public static void main(String[] args) {
 
         System.out.println("Hotel Booking System");
-        System.out.println("Version: 4.0");
+        System.out.println("Version: 5.0");
         System.out.println("--------------------");
 
-        // Inventory
-        RoomInventory inventory = new RoomInventory();
+        BookingRequestQueue queue = new BookingRequestQueue();
 
-        // Room details
-        Room[] rooms = {
-                new Room("Single Room", 2000),
-                new Room("Double Room", 3500),
-                new Room("Suite Room", 6000)
-        };
+        // Guest booking requests
+        Reservation r1 = new Reservation("Arun", "Single Room");
+        Reservation r2 = new Reservation("Priya", "Double Room");
+        Reservation r3 = new Reservation("Rahul", "Suite Room");
 
-        // Search service
-        RoomSearchService searchService = new RoomSearchService();
+        // Add requests to queue
+        queue.addRequest(r1);
+        queue.addRequest(r2);
+        queue.addRequest(r3);
 
-        // Display available rooms
-        searchService.searchAvailableRooms(inventory, rooms);
+        // Display queue
+        queue.displayRequests();
     }
 }
